@@ -4,13 +4,13 @@
  */
 package com.IS2024.Megastore.repositories;
 
-import org.springframework.data.repository.CrudRepository;
 import com.IS2024.Megastore.entities.Estado;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author maite
  */
-public interface EstadoRepository extends CrudRepository<Estado,Long> {
+public interface EstadoRepository extends JpaRepository<Estado,Long> {
     
 }

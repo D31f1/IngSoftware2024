@@ -4,12 +4,13 @@
  */
 package com.IS2024.Megastore.repositories;
 
-import com.IS2024.Megastore.entities.Rol;
+import com.IS2024.Megastore.entities.TipoVarianteProducto;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author maite
  */
-public interface RolRepository extends JpaRepository<Rol, Long> {
+public interface TipoVarianteProductoRepository extends JpaRepository<TipoVarianteProducto, Long> {
     
 }

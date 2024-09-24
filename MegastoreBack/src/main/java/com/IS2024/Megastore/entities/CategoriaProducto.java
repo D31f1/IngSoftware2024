@@ -5,6 +5,9 @@
 package com.IS2024.Megastore.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 /**
@@ -14,5 +17,9 @@ import lombok.Data;
 @Data
 @Entity
 public class CategoriaProducto {
-    
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private long id;
+    private String nombre;
+    private String descripcion;
 }

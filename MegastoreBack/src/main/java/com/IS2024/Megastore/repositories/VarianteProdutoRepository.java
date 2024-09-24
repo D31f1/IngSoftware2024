@@ -4,12 +4,12 @@
  */
 package com.IS2024.Megastore.repositories;
 
-import org.springframework.data.repository.CrudRepository;
 import com.IS2024.Megastore.entities.VarianteProducto;
+import org.springframework.data.jpa.repository.JpaRepository;
 /**
  *
  * @author maite
  */
-public interface VarianteProdutoRepository extends CrudRepository<VarianteProducto,Long> {
+public interface VarianteProdutoRepository extends JpaRepository<VarianteProducto,Long> {
     
 }

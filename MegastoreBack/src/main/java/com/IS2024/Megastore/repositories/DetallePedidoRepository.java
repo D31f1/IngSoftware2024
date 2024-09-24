@@ -4,13 +4,14 @@
  */
 package com.IS2024.Megastore.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+
 import com.IS2024.Megastore.entities.DetallePedido;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author maite
  */
-public interface DetallePedidoRepository extends CrudRepository<DetallePedido, Long> {
+public interface DetallePedidoRepository extends JpaRepository<DetallePedido, Long> {
     
 }

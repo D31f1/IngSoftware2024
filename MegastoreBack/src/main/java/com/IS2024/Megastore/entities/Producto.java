@@ -5,6 +5,14 @@
 package com.IS2024.Megastore.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -14,5 +22,19 @@ import lombok.Data;
 @Data
 @Entity
 public class Producto {
-    
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private long id;
+    private String nombre;
+    private int stock;
+    @ManyToOne
+    @JoinColumn(name="id_categoria", nullable=false)
+    private CategoriaProducto categoria;
+    @ManyToMany
+    @JoinTable(
+        name = "producto_x_variante",
+        joinColumns = @JoinColumn(name = "id_producto"),
+        inverseJoinColumns = @JoinColumn(name = "id_variante")
+    )
+    private List<VarianteProducto> variantes;
 }

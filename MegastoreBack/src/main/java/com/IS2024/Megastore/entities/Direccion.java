@@ -14,11 +14,13 @@ import lombok.Data;
  *
  * @author maite
  */
+
 @Data
 @Entity
-public class Estado {
+public class Direccion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
-    private String nombre;
+    private String calle;
+    private String numero;
 }

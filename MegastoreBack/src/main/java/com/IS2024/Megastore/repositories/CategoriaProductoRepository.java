@@ -4,12 +4,12 @@
  */
 package com.IS2024.Megastore.repositories;
 
-import org.springframework.data.repository.CrudRepository;
 import com.IS2024.Megastore.entities.CategoriaProducto;
+import org.springframework.data.jpa.repository.JpaRepository;
 /**
  *
  * @author maite
  */
-public interface CategoriaProductoRepository extends CrudRepository<CategoriaProducto, Long> {
+public interface CategoriaProductoRepository extends JpaRepository<CategoriaProducto, Long> {
     
 }
