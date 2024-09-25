@@ -1,0 +1,68 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Espacio superior */
+}
+h2{
+  font-size: 32px; /* Tamaño del título */
+  margin-bottom: 30px; /* Espacio entre el título y el formulario */
+}
+.registro-svg{
+  margin-bottom: 40px; /* Espacio entre el logo y el título */
+}
+
+.register-container form {
+  display: flex; /* Usar flex para el formulario */
+  justify-content: center; /* Centrar los grupos horizontalmente */
+  width: 100%; /* Ancho completo */
+}
+
+.input-container {
+  display: flex; /* Para permitir que los grupos estén lado a lado */
+  justify-content: space-between; /* Espacio entre los grupos */
+  width: 80%; /* Ancho deseado */
+}
+
+.register-group {
+  display: flex; /* Cambia a flex para alinear los elementos correctamente */
+  flex-direction: row; /* Mantiene los labels e inputs en una fila */
+  align-items: center; /* Alinea verticalmente los elementos al centro */
+  width: 45%; /* Ancho de cada grupo */
+  margin-right: 120px; /* Espacio a la derecha */
+}
+
+.register-group label {
+  text-align: right; /* Alinea el texto a la derecha */
+  margin-right: 10px; /* Espacio entre el label y el input */
+  flex: 1; /* Permite que el label ocupe espacio proporcionalmente */
+  margin-top: 19px; /* Ajusta esta propiedad para bajar el label */
+}
+
+.register-group input {
+  padding: 10px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-bottom: 1px solid #cecece; /* Borde inferior del input */
+  width: 40%; /* Ancho del input ajustado */
+  outline: none; /* Elimina el contorno por defecto */
+  background: none; /* Sin fondo */
+  margin-right: 120px;
+}
+
+
+.button-group {
+  display: flex; /* Usar flexbox para alinear los botones */
+  justify-content: space-between; /* Espaciado entre los botones */
+  padding: 10px; /* Espaciado interno */
+  width: 20%; /* Asegura que el grupo de botones ocupe todo el ancho */
+}
+
+.button-group button {
+  background-color: #72787e; /* Color de fondo del botón */
+  color: rgb(0, 0, 0); /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  padding: 10px 20px; /* Espaciado interno para los botones */
+  width: 48%; /* Asegura que los botones ocupen un ancho similar y mantengan espacio entre ellos */
+}

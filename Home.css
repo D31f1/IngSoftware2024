@@ -1,0 +1,65 @@
+/* Estilos generales para asegurar que no haya barras de desplazamiento */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  
+}
+.home{
+  overflow: hidden; /* Evita las barras de desplazamiento */
+}
+/* Contenedor principal para centrar el contenido */
+.container-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrado vertical */
+  align-items: center; /* Centrado horizontal */
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  text-align: center;
+  position: relative; /* Necesario para posicionar el botón de login */
+}
+
+/* Centrado del título */
+.container-home h1 {
+  font-size: 80px; /* Tamaño de la fuente */
+  margin: 0; /* Eliminar márgenes para un mejor centrado */
+  color: #333;
+}
+
+/* Centrado de la imagen */
+.container-home .center-image {
+  width: 100%;
+  max-width: 900px; /* Tamaño máximo de la imagen */
+  height: auto;
+  margin: 20px 0; /* Espacio arriba y abajo de la imagen */
+}
+
+
+
+
+.social-buttons {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  position: absolute; /* Position it to the right of the image */
+  right: 200px; /* Adjust this to position closer or further from the image */
+  top: 220px; /* Align to the top of the image */
+}
+
+.social-buttons button {
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  margin-bottom: 5px; /* Space between buttons */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.social-buttons button:last-child {
+  margin-bottom: 0; /* No margin on the last button */
+}
+
+
+
+
+
+
+
