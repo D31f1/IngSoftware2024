@@ -26,6 +26,18 @@ public class CategoriaProductoService implements CategoriaProductoRepository {
     
     @Autowired
     private CategoriaProductoRepository categoriaRepository;
+    
+    // =======================================================================================================
+    
+    @Override
+    public Optional<CategoriaProducto> findById(Long id) {
+        return this.categoriaRepository.findById(id);
+    }
+    
+    @Override
+    public CategoriaProducto getById(Long id) {
+        return this.categoriaRepository.getById(id); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     @Override
     public void flush() {
@@ -96,11 +108,6 @@ public class CategoriaProductoService implements CategoriaProductoRepository {
 
     @Override
     public <S extends CategoriaProducto> S save(S entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Optional<CategoriaProducto> findById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -179,9 +186,6 @@ public class CategoriaProductoService implements CategoriaProductoRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public CategoriaProducto getById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
 }

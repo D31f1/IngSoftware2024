@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class Usuario {
     private String apellido;
     private String correo;
     private String dni;
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name="id_direccion")
     private List<Direccion> direcciones;
     private String nroTelefono;
