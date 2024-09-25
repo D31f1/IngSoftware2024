@@ -4,6 +4,7 @@
  */
 package com.IS2024.Megastore.services;
 
+import com.IS2024.Megastore.Exceptions.InvalidEntityException;
 import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
 import com.IS2024.Megastore.entities.Usuario;
 import com.IS2024.Megastore.entities.Direccion;
@@ -54,7 +55,19 @@ public class UsuarioService implements UsuarioRepository{
             Usuario updatedUsuario = existingUsuario.get();
             updatedUsuario.setNombre(usuario.getNombre());
             updatedUsuario.setApellido(usuario.getApellido());
-            updatedUsuario.setCorreo(usuario.getCorreo());
+            if(!usuario.getCorreo().isEmpty()){
+                if(updatedUsuario.getCorreo() != usuario.getCorreo()){
+                    //EL US ESTA MODIFICANDO EL CORREO
+                    Optional<Usuario> existingUs = this.repository.findByCorreo(usuario.getCorreo()); 
+                    if(existingUs.isPresent()){
+                        throw new InvalidEntityException("Ya existe un usuario con el mismo correo");
+                    } else{
+                        updatedUsuario.setCorreo(usuario.getCorreo());
+                    }
+                }
+            } else {
+                throw new InvalidEntityException("El correo es un campo obligatorio");
+            }
             updatedUsuario.setNroTelefono(usuario.getNroTelefono());
             updatedUsuario.setContrasenia(usuario.getContrasenia());
             for(Direccion d : usuario.getDirecciones()) { //iteramos por las direcciones que tenga el usuario a Actualizar
@@ -77,7 +90,16 @@ public class UsuarioService implements UsuarioRepository{
     }
     
     public Usuario createUsuario(Usuario us){
-        return this.repository.save(us);
+        if(us.getCorreo() == null || us.getCorreo() == "" || us.getCorreo().isEmpty()){
+           Optional<Usuario> existingUs = this.repository.findByCorreo(us.getCorreo()); 
+           if(existingUs.isPresent()){
+               throw new InvalidEntityException("Ya existe un usuario con el mismo correo");
+           } else{
+               return this.repository.save(us);
+           }
+        } else {
+            throw new InvalidEntityException("El correo es un campo obligatorio.");
+        }
     }
 
     @Override
@@ -216,6 +238,11 @@ public class UsuarioService implements UsuarioRepository{
 
     @Override
     public <S extends Usuario, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Optional<Usuario> findByCorreo(String correo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
