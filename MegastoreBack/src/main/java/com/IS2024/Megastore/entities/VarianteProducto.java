@@ -28,7 +28,7 @@ public class VarianteProducto {
     private String nombre;  // "rojo", "azul", "S", "M", "L"
     @ManyToOne 
     @JoinColumn(name = "id_tipo_variante") 
-    private TipoVarianteProducto tipoVariante;  // Referencia a un solo tipo
+    private TipoVarianteProducto tipoVariante;  // color - talle
     @ManyToMany(mappedBy = "variantes")
     private List<Producto> productos;
 }
