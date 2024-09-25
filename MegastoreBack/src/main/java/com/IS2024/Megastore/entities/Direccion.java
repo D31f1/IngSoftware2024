@@ -25,7 +25,4 @@ public class Direccion {
     private long id;
     private String calle;
     private String numero;
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
 }

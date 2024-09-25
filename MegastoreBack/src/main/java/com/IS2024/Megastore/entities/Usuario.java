@@ -30,7 +30,8 @@ public class Usuario {
     private String apellido;
     private String correo;
     private String dni;
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")  
     private List<Direccion> direcciones;
     private String nroTelefono;
     
