@@ -4,6 +4,7 @@
  */
 package com.IS2024.Megastore.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,8 +30,7 @@ public class Usuario {
     private String apellido;
     private String correo;
     private String dni;
-    @OneToMany
-    @JoinColumn(name="id_direccion")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Direccion> direcciones;
     private String nroTelefono;
     

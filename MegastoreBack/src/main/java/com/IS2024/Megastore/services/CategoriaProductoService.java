@@ -6,6 +6,7 @@ package com.IS2024.Megastore.services;
 
 import com.IS2024.Megastore.entities.CategoriaProducto;
 import com.IS2024.Megastore.repositories.CategoriaProductoRepository;
+import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -36,9 +37,42 @@ public class CategoriaProductoService implements CategoriaProductoRepository {
     
     @Override
     public CategoriaProducto getById(Long id) {
-        return this.categoriaRepository.getById(id); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.categoriaRepository.getById(id); 
     }
+    
+    @Override
+    public List<CategoriaProducto> findAll() {
+        return this.categoriaRepository.findAll();
+    }
+    
+   
+    public CategoriaProducto updateCategoriaProducto(Long id, CategoriaProducto categoriaProducto) {
+        Optional<CategoriaProducto> existingCategoriaProducto = categoriaRepository.findById(id);
 
+        if (existingCategoriaProducto.isPresent()) {
+            CategoriaProducto updatedCategoriaProducto = existingCategoriaProducto.get();
+            updatedCategoriaProducto.setNombre(categoriaProducto.getNombre()); 
+            updatedCategoriaProducto.setDescripcion(categoriaProducto.getDescripcion()); 
+
+            return categoriaRepository.save(updatedCategoriaProducto);
+        } else {
+            throw new ResourceNotFoundException("CategoriaProducto no encontrado con id: " + id);
+        }
+    }
+    
+    public CategoriaProducto createCategoriaProducto(CategoriaProducto categoriaProducto) {
+        return categoriaRepository.save(categoriaProducto);
+    }
+    
+    @Override
+    public void deleteById(Long id) {
+        if (categoriaRepository.existsById(id)) {
+            categoriaRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException("CategoriaProducto no encontrado con id: " + id);
+        }
+    }
+    
     @Override
     public void flush() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -96,10 +130,6 @@ public class CategoriaProductoService implements CategoriaProductoRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public List<CategoriaProducto> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public List<CategoriaProducto> findAllById(Iterable<Long> ids) {
@@ -118,11 +148,6 @@ public class CategoriaProductoService implements CategoriaProductoRepository {
 
     @Override
     public long count() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void deleteById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
