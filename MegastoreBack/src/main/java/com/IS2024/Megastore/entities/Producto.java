@@ -24,7 +24,7 @@ import lombok.Data;
 public class Producto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     private String nombre;
     private int stock;
     @ManyToOne

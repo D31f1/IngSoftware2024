@@ -22,7 +22,7 @@ import lombok.Data;
 public class Direccion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     private String calle;
     private String numero;
 }

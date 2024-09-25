@@ -25,11 +25,11 @@ import lombok.Data;
 public class Usuario {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     private String nombre;
     private String apellido;
     private String correo;
-    private String dni;
+    private String contrasenia;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")  
     private List<Direccion> direcciones;

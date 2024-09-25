@@ -25,7 +25,7 @@ import lombok.Data;
 public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<DetallePedido> detalles;
     @ManyToOne

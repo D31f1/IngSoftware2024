@@ -19,7 +19,7 @@ import lombok.Data;
 public class CategoriaProducto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     private String nombre;
     private String descripcion;
 }

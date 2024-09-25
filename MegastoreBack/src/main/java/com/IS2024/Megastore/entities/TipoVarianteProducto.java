@@ -23,7 +23,7 @@ import lombok.Data;
 public class TipoVarianteProducto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     private String nombre;  // Ejemplo: "color", "talle"
     @OneToMany(mappedBy = "tipoVariante", cascade = CascadeType.ALL)
     private List<VarianteProducto> variantes;

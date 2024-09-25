@@ -21,7 +21,7 @@ import lombok.Data;
 public class DetallePedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     private int cantidad;
     @ManyToOne(optional=false)
     @JoinColumn(name="id_pedido", nullable=false)

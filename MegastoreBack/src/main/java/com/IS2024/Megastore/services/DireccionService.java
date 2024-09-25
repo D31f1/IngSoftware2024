@@ -52,7 +52,8 @@ public class DireccionService implements DireccionRepository{
             
             return this.direccionRepository.save(updatedDireccion);
         } else {
-            throw new ResourceNotFoundException("Direccion no encontrado con id: " + id);
+            //return this.direccionRepository.save(direccion);
+           throw new ResourceNotFoundException("Direccion no encontrado con id: " + id);
         }
     }
     

@@ -23,7 +23,7 @@ import lombok.Data;
 public class VarianteProducto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private long id;
+    private Long id;
     private String nombre;  // "rojo", "azul", "S", "M", "L"
     @ManyToOne
     @JoinColumn(name = "id_tipo_variante")
