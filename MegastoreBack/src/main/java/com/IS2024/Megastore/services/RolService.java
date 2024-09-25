@@ -4,6 +4,18 @@
  */
 package com.IS2024.Megastore.services;
 
+import com.IS2024.Megastore.entities.Rol;
+import com.IS2024.Megastore.repositories.RolRepository;
+import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +24,40 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RolService {
-    
+
+    @Autowired
+    private RolRepository rolRepository;
+
+    public List<Rol> findAll() {
+        return rolRepository.findAll();
+    }
+
+    public Optional<Rol> findById(Long id) {
+        return this.rolRepository.findById(id);
+    }
+
+    public Rol save(Rol rol) {
+        return rolRepository.save(rol);
+    }
+
+    public Rol update(Long id, Rol rolDetails) {
+        Optional<Rol> existingRol = rolRepository.findById(id);
+
+        if (existingRol.isPresent()) {
+            Rol updatedRol = existingRol.get();
+            updatedRol.setNombre(rolDetails.getNombre());
+
+            return rolRepository.save(updatedRol);
+        } else {
+            throw new ResourceNotFoundException("Rol no encontrado con id: " + id);
+        }
+    }
+
+    public void delete(Long id) {
+        if (rolRepository.existsById(id)) {
+            rolRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException("Rol no encontrado con id: " + id);
+        }
+    }
 }
