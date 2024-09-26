@@ -1,9 +1,9 @@
 import React from 'react';
 
-import LoginButton from './BotonUsuario';
+import LoginButton from '../BotonUsuario/BotonUsuario';
 import { useNavigate } from 'react-router-dom';
 import './Cabecera.css';
-import './Login.css';
+import '../Login/Login.css';
 
 const Cabecera = ({ isLoggedIn }) => {
     const navigate = useNavigate();

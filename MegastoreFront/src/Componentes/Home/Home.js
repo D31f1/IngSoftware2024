@@ -1,7 +1,7 @@
 // src/Home.js
 import React from 'react';
-import imagenInicio from './imagen_inicio.jpg';
-import LoginButton from './BotonUsuario';
+import imagenInicio from '../../Elementos/imagen_inicio.jpg';
+import LoginButton from '../BotonUsuario/BotonUsuario';
 import {useNavigate } from 'react-router-dom';
 import './Home.css'; // Si deseas agregar estilos específicos
 

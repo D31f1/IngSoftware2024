@@ -1,8 +1,8 @@
 import React from 'react';
 //import { useNavigate } from 'react-router-dom';
-import Cabecera from './Cabecera';
+import Cabecera from '../Cabecera/Cabecera';
 import './Catalogo.css'; // Archivo CSS para estilos
-import './Cabecera.css';
+import '../Cabecera/Cabecera.css';
 
 const ProductCard = ({ image, name, price }) => {
     return (

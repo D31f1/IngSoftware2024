@@ -1,12 +1,12 @@
 // src/App.js
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
-import Menu from './Menu';
-import Home from './Home';
-import Login from './Login';
-import Registro from './Registro';
-import Catálogo from './Catalogo';
-import Cabecera from './Cabecera'; // Asegúrate de importar la cabecera
+import Menu from './Componentes/Menu/Menu';
+import Home from './Componentes/Home/Home';
+import Login from './Componentes/Login/Login';
+import Registro from './Componentes/Registro/Registro';
+import Catálogo from './Componentes/Catalogo/Catalogo';
+import Cabecera from './Componentes/Cabecera/Cabecera'; // Asegúrate de importar la cabecera
 import './App.css';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        
         {/* Mostrar la cabecera solo en las rutas específicas */}
         {['/login', '/registro', '/catalogo'].includes(window.location.pathname) && <Cabecera />}
         
