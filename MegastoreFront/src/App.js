@@ -1,55 +1,77 @@
-// src/App.js
+import React, { useState } from 'react'; // Asegúrate de importar useState
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import Menu from './Componentes/Menu/Menu';
 import Home from './Componentes/Home/Home';
 import Login from './Componentes/Login/Login';
 import Registro from './Componentes/Registro/Registro';
-import Catálogo from './Componentes/Catalogo/Catalogo';
+import Catalogo from './Componentes/Catalogo/Catalogo';
 import Cabecera from './Componentes/Cabecera/Cabecera';
 import Pedidos from './Pedidos/Pedidos';
-import './App.css';
 import DetallePedido from './Componentes/DetallePedido/DetallePedido';
+import Carrito from './Componentes/CarritoCompras/Carrito';
+import './App.css';
+
 
 function App() {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false); // Inicia oculto
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [carrito, setCarrito] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Añadido: estado de isLoggedIn
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  const agregarAlCarrito = (producto) => {
+    setCarrito((prevCarrito) => {
+      const productoExistente = prevCarrito.find((item) => item.id === producto.id);
+      if (productoExistente) {
+        return prevCarrito.map((item) =>
+          item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
+        );
+      } else {
+        return [...prevCarrito, { ...producto, cantidad: 1 }];
+      }
+    });
+  };
+
   return (
     <Router>
-      <AppContent toggleSidebar={toggleSidebar} isSidebarVisible={isSidebarVisible} />
+      <AppContent
+        toggleSidebar={toggleSidebar}
+        isSidebarVisible={isSidebarVisible}
+        carrito={carrito}
+        agregarAlCarrito={agregarAlCarrito}
+        isLoggedIn={isLoggedIn} // Pasamos el estado de isLoggedIn
+        setIsLoggedIn={setIsLoggedIn} // Pasamos la función para cambiar el estado
+      />
     </Router>
   );
 }
 
-function AppContent({ toggleSidebar, isSidebarVisible }) {
-  const location = useLocation(); // Ahora está dentro del contexto de <Router>
+function AppContent({ toggleSidebar, isSidebarVisible, carrito, agregarAlCarrito, isLoggedIn, setIsLoggedIn }) {
+  const location = useLocation();
 
-  // Función que determina si debe mostrarse la cabecera en la ruta actual
   const shouldShowCabecera = () => {
     return ['/login', '/registro', '/catalogo'].includes(location.pathname);
   };
 
   return (
     <div className="App">
-      {/* Mostrar la cabecera solo si la función lo permite */}
-      {shouldShowCabecera() && <Cabecera />}
+      {shouldShowCabecera() && <Cabecera isLoggedIn={isLoggedIn} carrito={carrito} />}
       
       <Menu isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
       
       <div className={`content ${isSidebarVisible ? 'with-sidebar' : 'full-width'}`}>
         <Routes>
-          <Route path="/" element={<Home />} /> {/* Página Home */}
-          <Route path="/catalogo" element={<Catálogo />} /> {/* Página Catálogo */}
-          <Route path="/sobre-nosotros" element={<h1>Sobre Nosotros</h1>} /> {/* Página Sobre Nosotros */}
-          <Route path="/sucursales" element={<h1>Sucursales</h1>} /> {/* Página Sucursales */}
-          <Route path="/login" element={<Login />} /> {/* Página Login */}
-          <Route path="/registro" element={<Registro />} /> {/* Página Registro */}
+          <Route path="/" element={<Home />} />
+          <Route path="/catalogo" element={<Catalogo agregarAlCarrito={agregarAlCarrito} />} />
+          <Route path="/sobre-nosotros" element={<h1>Sobre Nosotros</h1>} />
+          <Route path="/sucursales" element={<h1>Sucursales</h1>} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} /> {/* Pasa la función a Login */}
+          <Route path="/registro" element={<Registro />} />
           <Route path="/pedidos" element={<Pedidos />} />
           <Route path="/pedido/:id" element={<DetallePedido />} />
+          <Route path="/carrito" element={<Carrito productos={carrito} />} />
         </Routes>
       </div>
     </div>

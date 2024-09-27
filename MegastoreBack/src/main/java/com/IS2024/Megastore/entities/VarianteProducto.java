@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Data;
 
@@ -25,9 +26,9 @@ public class VarianteProducto {
     @Id
     private Long id;
     private String nombre;  // "rojo", "azul", "S", "M", "L"
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_variante")
-    private TipoVarianteProducto tipoVariante;  // color, talle
+    @ManyToOne 
+    @JoinColumn(name = "id_tipo_variante") 
+    private TipoVarianteProducto tipoVariante;  // color - talle
     @ManyToMany(mappedBy = "variantes")
     private List<Producto> productos;
 }

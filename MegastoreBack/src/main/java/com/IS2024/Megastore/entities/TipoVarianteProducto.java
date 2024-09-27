@@ -25,6 +25,5 @@ public class TipoVarianteProducto {
     @Id
     private Long id;
     private String nombre;  // Ejemplo: "color", "talle"
-    @OneToMany(mappedBy = "tipoVariante", cascade = CascadeType.ALL)
-    private List<VarianteProducto> variantes;
+    private String codigo;
 }

@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.sql.Date;
@@ -35,4 +36,6 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name="id_estado", nullable=false)
     private Estado estado;
+    @Lob 
+    private String foto;
 }
