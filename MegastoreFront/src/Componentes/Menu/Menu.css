@@ -2,13 +2,14 @@
 .sidebar {
     position: fixed;
     top: 0;
-    left: -290px;
+    left: 0px;
     height: 100%;
     width: 250px; /* Ancho de la barra lateral cuando está visible */
     background-color: #f8f9fa;
     transition: margin-left 0.6s ease;
     z-index: 1000;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 0;
   }
   .menu{
     overflow: hidden; /* Evita las barras de desplazamiento */
@@ -16,12 +17,12 @@
    
   /* Cuando la barra lateral está oculta, la movemos fuera de la pantalla */
   .sidebar.hidden {
-    margin-left: -200px; /* Oculta completamente la barra lateral */
+    margin-left: -300px; /* Oculta completamente la barra lateral */
   }
   
   /* Cuando la barra lateral está visible */
   .sidebar.visible {
-    margin-left: 300px;
+    margin-left: 0;
     margin-top:0px;
   }
   

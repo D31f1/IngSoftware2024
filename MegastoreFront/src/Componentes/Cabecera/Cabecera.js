@@ -9,7 +9,7 @@ const Cabecera = ({ isLoggedIn }) => {
     const navigate = useNavigate();
     const handleUserIconClick = () => {
     // Lógica para redirigir a la página de inicio de sesión o mostrar el menú
-    navigate('./Login');//redirige a la pagina de inicio de sesion
+    navigate('./Login');
   };
 
     return (
