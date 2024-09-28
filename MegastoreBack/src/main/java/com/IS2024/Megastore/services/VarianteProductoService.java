@@ -4,11 +4,10 @@
  */
 package com.IS2024.Megastore.services;
 
-import com.IS2024.Megastore.Exceptions.InvalidEntityException;
 import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
-import com.IS2024.Megastore.entities.Usuario;
-import com.IS2024.Megastore.entities.Direccion;
-import com.IS2024.Megastore.repositories.UsuarioRepository;
+import com.IS2024.Megastore.entities.VarianteProducto;
+import com.IS2024.Megastore.entities.TipoVarianteProducto;
+import com.IS2024.Megastore.repositories.VarianteProdutoRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -25,80 +24,54 @@ import org.springframework.stereotype.Service;
  * @author maite
  */
 @Service
-public class UsuarioService implements UsuarioRepository{
-    
+public class VarianteProductoService implements VarianteProdutoRepository  {
+    @Autowired
+    private VarianteProdutoRepository repository;
     
     @Autowired
-    private UsuarioRepository repository;
-    @Autowired
-    private DireccionService direccionService;
+    private TipoVarianteProductoService tipoVarianteService;
 
     
     @Override
-    public Optional<Usuario> findById(Long id) {
+    public Optional<VarianteProducto> findById(Long id) {
         return this.repository.findById(id);
     }
     
     @Override
-    public Usuario getById(Long id) {
+    public VarianteProducto getById(Long id) {
         return this.repository.getById(id);
     }
     
     @Override
-    public List<Usuario> findAll() {
+    public List<VarianteProducto> findAll() {
         return this.repository.findAll();
     }
     
-    public Usuario updateUsuario(Long id, Usuario usuario){
-        Optional<Usuario> existingUsuario = this.repository.findById(id);
-        if(existingUsuario.isPresent()){
-            Usuario updatedUsuario = existingUsuario.get();
-            updatedUsuario.setNombre(usuario.getNombre());
-            updatedUsuario.setApellido(usuario.getApellido());
-            if(!usuario.getCorreo().isEmpty()){
-                if(updatedUsuario.getCorreo() != usuario.getCorreo()){
-                    //EL US ESTA MODIFICANDO EL CORREO
-                    Optional<Usuario> existingUs = this.repository.findByCorreo(usuario.getCorreo()); 
-                    if(existingUs.isPresent()){
-                        throw new InvalidEntityException("Ya existe un usuario con el mismo correo");
-                    } else{
-                        updatedUsuario.setCorreo(usuario.getCorreo());
-                    }
-                }
+    public VarianteProducto updateVarianteProducto(Long id, VarianteProducto varianteProducto){
+        Optional<VarianteProducto> existingVarianteProducto = this.repository.findById(id);
+        if(existingVarianteProducto.isPresent()){
+            VarianteProducto updatedVarianteProducto = existingVarianteProducto.get();
+            
+            updatedVarianteProducto.setNombre(varianteProducto.getNombre());
+            Optional<TipoVarianteProducto> tipoVariante = this.tipoVarianteService.findById(varianteProducto.getTipoVariante().getId());
+            if(tipoVariante.isPresent()){
+                updatedVarianteProducto.setTipoVariante(tipoVariante.get());
             } else {
-                throw new InvalidEntityException("El correo es un campo obligatorio");
+                throw new ResourceNotFoundException("No existe un tipoVariante con id: " + varianteProducto.getTipoVariante().getId());
             }
-            updatedUsuario.setNroTelefono(usuario.getNroTelefono());
-            updatedUsuario.setContrasenia(usuario.getContrasenia());
-            for(Direccion d : usuario.getDirecciones()) { //iteramos por las direcciones que tenga el usuario a Actualizar
-                if (d.getId() != null && d.getId() > 0) { //si la direccion tiene un id la actualizamos
-                    this.direccionService.updateDireccion(d.getId(), d);
-                } else {  //sino creamos una nueva direccion
-                    this.direccionService.save(d);
-                }
-
-                //se verifica si la direccion esta o no en la lista de direcciones 
-                if (!updatedUsuario.getDirecciones().contains(d)) {
-                    updatedUsuario.getDirecciones().add(d); //si no esta la agregamos
-                }
-            }
-            return this.repository.save(updatedUsuario);
-        } else  {
-            //return this.repository.save(usuario);
-            throw new ResourceNotFoundException("Usuario no encontrado con id: " + id);
+            
+            return this.repository.save(updatedVarianteProducto);
+        } else {
+            throw new ResourceNotFoundException("VarianteProducto no encontrado con id: " + id);
         }
     }
     
-    public Usuario createUsuario(Usuario us){
-        if(us.getCorreo() == null || "".equals(us.getCorreo()) || us.getCorreo().isEmpty()){
-           throw new InvalidEntityException("El correo es un campo obligatorio.");
+    public VarianteProducto createVarianteProducto(VarianteProducto varianteProducto){
+        Optional<TipoVarianteProducto> tipoVariante = this.tipoVarianteService.findById(varianteProducto.getTipoVariante().getId());
+        if(tipoVariante.isPresent()){
+            return this.repository.save(varianteProducto);
         } else {
-           Optional<Usuario> existingUs = this.repository.findByCorreo(us.getCorreo()); 
-           if(existingUs.isPresent()){
-               throw new InvalidEntityException("Ya existe un usuario con el mismo correo");
-           } else{
-               return this.repository.save(us);
-           }
+            throw new ResourceNotFoundException("No existe un tipoVariante con id: " + varianteProducto.getTipoVariante().getId());
         }
     }
 
@@ -107,27 +80,27 @@ public class UsuarioService implements UsuarioRepository{
         if(this.repository.existsById(id)){
             this.repository.deleteById(id);
         }else {
-            throw new ResourceNotFoundException("Usuario no encontrado con id: " + id);
+            throw new ResourceNotFoundException("VarianteProducto no encontrado con id: " + id);
         }
     }
-    
+
     @Override
     public void flush() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> S saveAndFlush(S entity) {
+    public <S extends VarianteProducto> S saveAndFlush(S entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends VarianteProducto> List<S> saveAllAndFlush(Iterable<S> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void deleteAllInBatch(Iterable<Usuario> entities) {
+    public void deleteAllInBatch(Iterable<VarianteProducto> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -142,37 +115,37 @@ public class UsuarioService implements UsuarioRepository{
     }
 
     @Override
-    public Usuario getOne(Long id) {
+    public VarianteProducto getOne(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Usuario getReferenceById(Long id) {
+    public VarianteProducto getReferenceById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> List<S> findAll(Example<S> example) {
+    public <S extends VarianteProducto> List<S> findAll(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends VarianteProducto> List<S> findAll(Example<S> example, Sort sort) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> List<S> saveAll(Iterable<S> entities) {
+    public <S extends VarianteProducto> List<S> saveAll(Iterable<S> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Usuario> findAllById(Iterable<Long> ids) {
+    public List<VarianteProducto> findAllById(Iterable<Long> ids) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> S save(S entity) {
+    public <S extends VarianteProducto> S save(S entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -187,7 +160,7 @@ public class UsuarioService implements UsuarioRepository{
     }
 
     @Override
-    public void delete(Usuario entity) {
+    public void delete(VarianteProducto entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -197,7 +170,7 @@ public class UsuarioService implements UsuarioRepository{
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Usuario> entities) {
+    public void deleteAll(Iterable<? extends VarianteProducto> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -207,43 +180,37 @@ public class UsuarioService implements UsuarioRepository{
     }
 
     @Override
-    public List<Usuario> findAll(Sort sort) {
+    public List<VarianteProducto> findAll(Sort sort) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Page<Usuario> findAll(Pageable pageable) {
+    public Page<VarianteProducto> findAll(Pageable pageable) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> Optional<S> findOne(Example<S> example) {
+    public <S extends VarianteProducto> Optional<S> findOne(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends VarianteProducto> Page<S> findAll(Example<S> example, Pageable pageable) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> long count(Example<S> example) {
+    public <S extends VarianteProducto> long count(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario> boolean exists(Example<S> example) {
+    public <S extends VarianteProducto> boolean exists(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Usuario, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends VarianteProducto, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public Optional<Usuario> findByCorreo(String correo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }

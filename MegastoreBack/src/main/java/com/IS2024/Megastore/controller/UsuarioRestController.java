@@ -4,6 +4,7 @@
  */
 package com.IS2024.Megastore.controller;
 
+import ch.qos.logback.core.CoreConstants;
 import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
 import com.IS2024.Megastore.services.UsuarioService;
 import com.IS2024.Megastore.entities.Usuario;

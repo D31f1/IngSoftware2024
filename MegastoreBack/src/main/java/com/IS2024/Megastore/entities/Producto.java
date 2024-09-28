@@ -27,6 +27,8 @@ public class Producto {
     private Long id;
     private String nombre;
     private int stock;
+    private long precio;
+    private String codigo;
     @ManyToOne
     @JoinColumn(name="id_categoria", nullable=false)
     private CategoriaProducto categoria;

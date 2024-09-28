@@ -27,8 +27,9 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<DetallePedido> detalles;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_pedido") // Esta columna irá en DetallePedido
+    private List<DetallePedido> detallesPedido;
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable=false)
     private Usuario usuario;
@@ -38,4 +39,5 @@ public class Pedido {
     private Estado estado;
     @Lob 
     private String foto;
+    private long precio;
 }
