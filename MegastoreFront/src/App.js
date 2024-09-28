@@ -6,14 +6,10 @@ import Login from './Componentes/Login/Login';
 import Registro from './Componentes/Registro/Registro';
 import Catalogo from './Componentes/Catalogo/Catalogo';
 import Cabecera from './Componentes/Cabecera/Cabecera';
-import Pedidos from './Pedidos/Pedidos';
+import Pedidos from './Componentes/Pedidos/Pedidos';
 import DetallePedido from './Componentes/DetallePedido/DetallePedido';
 import Carrito from './Componentes/CarritoCompras/Carrito';
 import './App.css';
-
-import Pedidos from './Componentes/Pedidos/Pedidos'
-import './App.css';
-import DetallePedido from './Componentes/DetallePedido/DetallePedido';
 import PedidosAdmin from './Componentes/PedidosAdmin/PedidosAdmin';
 
 function App() {
