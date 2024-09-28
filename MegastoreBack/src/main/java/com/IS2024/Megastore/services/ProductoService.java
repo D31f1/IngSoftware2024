@@ -124,13 +124,11 @@ public class ProductoService {
         return this.repository.save(producto);
     }
     
-    //cantidad puede ser un numero negativo 
+    
     public void actualizarStock(Long id, int cantidad){
         Optional<Producto> producto = this.repository.findById(id);
         if(producto.isPresent()){
             Producto updatedProducto = producto.get();
-            System.out.println("## stock actual: " + updatedProducto.getStock());
-            System.out.println("cantidad: " + cantidad);
             int stock = updatedProducto.getStock() - cantidad;
             if(stock>=0){
                 updatedProducto.setStock(stock);
