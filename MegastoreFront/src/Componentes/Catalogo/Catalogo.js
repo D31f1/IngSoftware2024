@@ -4,25 +4,33 @@ import FiltroCatalogo from '../FiltroCatalogo/FiltroCatalogo';
 import './Catalogo.css'; // Archivo CSS para estilos
 import '../Cabecera/Cabecera.css';
 
-const ProductCard = ({ image, name, price, agregarAlCarrito, item }) => {
+const ProductCard = ({ image, name, price }) => {
     return (
         <div className="product-card">
             <img src={image} alt={name} className="product-image" />
             <h5 className="product-name">{name}</h5>
             <p className="product-price">${price}</p>
-            <button onClick={() => agregarAlCarrito(item)}>Agregar al carrito</button>
         </div>
     );
 };
 
-const Catalogo = ({ agregarAlCarrito }) => {
+const Catalogo = () => {
     const [filteredItems, setFilteredItems] = useState([]);
     const [filters, setFilters] = useState({ price: null, colors: [], categories: [] });
+
     const clothingItems = [
-        { id: 1, name: 'Camisa', price: 29.99, image: 'https://via.placeholder.com/150' },
-        { id: 2, name: 'Pantalón', price: 49.99, image: 'https://via.placeholder.com/150' },
-        { id: 3, name: 'Zapatos', price: 79.99, image: 'https://via.placeholder.com/150' },
-        { id: 4, name: 'Chaqueta', price: 99.99, image: 'https://via.placeholder.com/150' },
+        { id: 1, name: 'Camisa', price: 29.99, image: 'https://via.placeholder.com/150', color: 'Rojo', category: 'Camisa' },
+        { id: 2, name: 'Pantalón', price: 49.99, image: 'https://via.placeholder.com/150', color: 'Azul', category: 'Pantalón' },
+        { id: 3, name: 'Zapatos', price: 79.99, image: 'https://via.placeholder.com/150', color: 'Negro', category: 'Zapatos' },
+        { id: 4, name: 'Chaqueta', price: 99.99, image: 'https://via.placeholder.com/150', color: 'Verde', category: 'Chaqueta' },
+        { id: 5, name: 'Camisa', price: 29.99, image: 'https://via.placeholder.com/150', color: 'Blanco', category: 'Camisa' },
+        { id: 6, name: 'Pantalón', price: 49.99, image: 'https://via.placeholder.com/150', color: 'Negro', category: 'Pantalón' },
+        { id: 7, name: 'Zapatos', price: 79.99, image: 'https://via.placeholder.com/150', color: 'Rojo', category: 'Zapatos' },
+        { id: 8, name: 'Chaqueta', price: 99.99, image: 'https://via.placeholder.com/150', color: 'Azul', category: 'Chaqueta' },
+        { id: 9, name: 'Camisa', price: 29.99, image: 'https://via.placeholder.com/150', color: 'Rojo', category: 'Camisa' },
+        { id: 10, name: 'Pantalón', price: 49.99, image: 'https://via.placeholder.com/150', color: 'Blanco', category: 'Pantalón' },
+        { id: 11, name: 'Zapatos', price: 79.99, image: 'https://via.placeholder.com/150', color: 'Verde', category: 'Zapatos' },
+        { id: 12, name: 'Chaqueta', price: 99.99, image: 'https://via.placeholder.com/150', color: 'Negro', category: 'Chaqueta' }
     ];
 
     const handleFilterChange = (newFilters) => {
@@ -62,18 +70,21 @@ const Catalogo = ({ agregarAlCarrito }) => {
     return (
         <div className="catalog-container">
             <Cabecera />
-            {/* <FiltroCatalogo onFilterChange={handleFilterChange} resetFilters={resetFilters} filters={filters} /> */}
+            <FiltroCatalogo onFilterChange={handleFilterChange} resetFilters={resetFilters} filters={filters} />
+            
             <div className="grid-container">
-                {clothingItems.map((item) => (
-                    <ProductCard
-                        key={item.id}
-                        image={item.image}
-                        name={item.name}
-                        price={item.price}
-                        item={item}
-                        agregarAlCarrito={agregarAlCarrito}
-                    />
-                ))}
+                {itemsToDisplay.length > 0 ? (
+                    itemsToDisplay.map(item => (
+                        <ProductCard
+                            key={item.id}
+                            image={item.image}
+                            name={item.name}
+                            price={item.price}
+                        />
+                    ))
+                ) : (
+                    <p>Producto no encontrado</p>
+                )}
             </div>
         </div>
     );

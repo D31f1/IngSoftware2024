@@ -6,9 +6,7 @@
   }
   
   .input-group {
-    display: flex;
-    flex-direction: column; /* Coloca los campos uno debajo del otro */
-    margin-bottom: 20px; /* Espacio entre los grupos de entrada */
+    display: contents;
   }
   
   .input-group label {

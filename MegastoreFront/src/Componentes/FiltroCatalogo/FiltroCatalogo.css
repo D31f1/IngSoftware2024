@@ -6,10 +6,9 @@
     margin-left: 80px; /* Ajusta el margen izquierdo según sea necesario */
     position: sticky; /* Mantiene el contenedor fijo al hacer scroll */
     top: 0; /* Fija el contenedor en la parte superior */
-    background: white; /* Fondo blanco para destacar los filtros */
+    background:transparent; /* Fondo blanco para destacar los filtros */
     z-index: 10; /* Asegura que esté por encima de otros elementos */
     padding: 10px 0; /* Espaciado alrededor de los filtros */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra opcional para efecto visual */
 }
 
 .filter-button {

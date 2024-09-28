@@ -6,7 +6,6 @@
   justify-content: center; /* Centra los elementos verticalmente */
   height: 100vh; /* Altura completa de la ventana */
   text-align: center; /* Centra el texto */
-  padding: 0 20px; /* Asegura espacio a los lados en pantallas pequeñas */
 }
 
 .bi-person {

@@ -51,7 +51,7 @@ header {
     position: absolute; /* Mantiene la cabecera fija en la parte superior */
     top: 0; /* Pegado al borde superior */
     left: 0; /* Pegado al borde izquierdo */
-    width: 1515px; /* Ocupa todo el ancho */
+    width: 100%; /* Ocupa todo el ancho */
     height: 80px;
     background-image:url('../../Elementos/imagen-cabecera.jpg'); /* Color de fondo */
     background-size: cover; /* Asegúrate de que la imagen cubra todo el espacio */
@@ -62,7 +62,7 @@ header {
 }
 
 .catalog-container {
-    margin-top: 450px; /* Da un margen superior para que no se superponga con la cabecera */
+    margin-top: 100px; /* Da un margen superior para que no se superponga con la cabecera */
 }
 
 /* Estilo para el texto en la cabecera */
