@@ -12,6 +12,7 @@ const DetallePedido = () => {
   // Ejemplo de datos del pedido. Puedes obtener esto de un API o de un contexto global.
   const pedidoDetalles = {
     id,
+    direccion: location.state?.direccion || 'Dirección no disponible', // Obteniendo la dirección del estado
     productos: [
       { nombre: 'Producto 1', precio: 10, cantidad: 2 },
       { nombre: 'Producto 2', precio: 15, cantidad: 1 },
@@ -29,7 +30,7 @@ const DetallePedido = () => {
 
   // Función para manejar el botón "Volver"
   const volver = () => {
-    if (location.state?.from === 'admin') {
+    if (location.state?.from === 'pedidosAdmin') {
       navigate('/pedidosAdmin');
     } else {
       navigate('/pedidos');
