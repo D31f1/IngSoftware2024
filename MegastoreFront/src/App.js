@@ -12,7 +12,6 @@ import Carrito from './Componentes/CarritoCompras/Carrito';
 import './App.css';
 import PedidosAdmin from './Componentes/PedidosAdmin/PedidosAdmin';
 import GestionarCatalogo from './Componentes/Catalogo/GestionarCatalogo';
-import DetallePedido from './Componentes/DetallePedido/DetallePedido';
 import Admin from './Componentes/Admin/Admin';
 import LoginAdmin from './Componentes/Admin/LoginAdmin';
 import Edicion from './Componentes/Edicion/Edicion';
