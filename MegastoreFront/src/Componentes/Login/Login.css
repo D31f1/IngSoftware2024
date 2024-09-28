@@ -6,6 +6,7 @@
   justify-content: center; /* Centra los elementos verticalmente */
   height: 100vh; /* Altura completa de la ventana */
   text-align: center; /* Centra el texto */
+  padding: 0 20px; /* Asegura espacio a los lados en pantallas pequeñas */
 }
 
 .bi-person {
@@ -26,21 +27,20 @@ form {
 
 form div {
   margin-bottom: 15px; /* Espacio entre los inputs */
-  width: 20%; /* Ajusta el ancho de los divs a 80% para mantener espacio a los lados */
+  width: 80%; /* Ajusta el ancho del contenedor de los inputs */
+  max-width: 400px; /* Máximo ancho para evitar que crezca demasiado */
 }
 
 .input-group {
   position: relative; /* Permite posicionar el borde inferior */
   margin-bottom: 15px; /* Espacio entre los inputs */
-  width: 80%; /* Ancho del contenedor */
-  align-items: center;
-  margin-left: 970px;
+  width: 100%; /* Asegura que el input ocupe el 100% del contenedor */
+  max-width: 400px; /* Máximo ancho para mantener proporción */
 }
 
 .input-group label {
-  align-items: center;
   display: block; /* Asegura que el label se comporte como bloque */
-  text-align: center; /* Alinea el texto a la izquierda */
+  text-align: left; /* Alinea el texto a la izquierda */
   margin-bottom: 5px; /* Espacio entre el label y el input */
 }
 
@@ -51,7 +51,6 @@ form div {
   width: 100%; /* Ancho completo */
   outline: none; /* Elimina el contorno por defecto */
   background: none;
-  
 }
 
 button {
@@ -61,10 +60,44 @@ button {
   border: none; /* Sin borde */
   border-radius: 5px; /* Bordes redondeados */
   cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-  width: 8%; /* Botón ocupa todo el ancho del formulario */
+  width: 80%; /* Ajusta el ancho del botón */
+  max-width: 200px; /* Asegura que el botón no crezca demasiado */
 }
 
 .register-prompt {
   margin-top: 15px; /* Espacio encima de la frase de registro */
 }
 
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 24px; /* Reduce el tamaño del título */
+  }
+
+  form div {
+    width: 100%; /* Ancho completo en pantallas pequeñas */
+  }
+
+  button {
+    width: 100%; /* Botón ocupa todo el ancho */
+  }
+}
+
+@media (max-width: 480px) {
+  .bi-person {
+    margin-bottom: 20px; /* Reduce el espacio en pantallas muy pequeñas */
+  }
+
+  h1 {
+    font-size: 20px; /* Reduce más el tamaño del título */
+  }
+
+  form div {
+    margin-bottom: 10px; /* Reduce el espacio entre los inputs */
+  }
+
+  button {
+    width: 100%; /* Botón ocupa todo el ancho */
+    padding: 8px; /* Reduce el padding en pantallas pequeñas */
+  }
+}

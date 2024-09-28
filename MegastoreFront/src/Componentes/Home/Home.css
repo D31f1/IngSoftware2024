@@ -9,15 +9,10 @@ body, html {
 .home{
   overflow: hidden; /* Evita las barras de desplazamiento */
 }
-/* Contenedor principal para centrar el contenido */
 .container-home {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centrado vertical */
-  align-items: center; /* Centrado horizontal */
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
-  text-align: center;
-  position: relative; /* Necesario para posicionar el botón de login */
+  align-items: center;
 }
 
 /* Centrado del título */
@@ -57,9 +52,10 @@ body, html {
   margin-bottom: 0; /* No margin on the last button */
 }
 
-
-
-
-
-
+.header-buttons {
+  display: flex;
+  justify-content: flex-end; /* Asegura que estén alineados a la derecha */
+  gap: 20px; /* Aumenta el espacio entre los botones */
+  padding: 20px;
+}
 
