@@ -79,8 +79,9 @@ public class UsuarioRestController {
     }
     
     @PostMapping("/iniciarSesion")
-    public Usuario iniciarSesion(@RequestBody iniciarSesionRq input) {
-        return null;
+    public ResponseEntity<?> iniciarSesion(@RequestBody iniciarSesionRq input) {
+        Usuario sesion = service.iniciarSesion(input);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sesion);
     }
     
 }
