@@ -8,21 +8,15 @@ const Registro = () => {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
-
     nroTelefono: '',  // Número de teléfono del usuario
     direcciones: [{ calle: '', numero: '' }],  // Lista de direcciones con calle y número
     correo: '',  // Correo electrónico del usuario
     contrasenia: '',  // Contraseña ingresada
     confirmarContrasenia: ''  // Confirmación de la contraseña
-    });
+  });
   const [newAddress, setNewAddress] = useState({ calle: '', altura: '' });
   const [showDirections, setShowDirections] = useState(false);
   const navigate = useNavigate();// Hook de React Router para redireccionar
-
- 
-
-
-   
 
   // Manejador para los cambios en los campos del formulario
   const handleChange = (e) => {
@@ -31,7 +25,7 @@ const Registro = () => {
   };
 
   // Manejador para cambios en las direcciones de envío (calle y número)
-  const handleNewAddressChange = (field, value) => {
+  const handleNewAddressChange = (index, field, value) => {
     setNewAddress({ ...newAddress, [field]: value });
   };
 
@@ -63,7 +57,41 @@ const Registro = () => {
     console.log(formData);
   };
 
-  
+  const registrarUsuario = () => {
+    const usuarioData = {
+      nombre: formData.nombre,
+      apellido: formData.apellido,
+      nroTelefono: formData.nroTelefono,
+      direcciones: formData.direcciones,
+      correo: formData.correo,
+      contrasenia: formData.contrasenia
+    };
+    // Solicitud POST al backend para registrar el usuario
+    fetch('http://localhost:8080/usuario/insert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(usuarioData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error al registrar el usuario');
+        }
+      })
+      .then((data) => {
+        console.log('Usuario registrado:', data);
+        alert('Registro exitoso');
+        navigate('/Home');  // Redirecciona a la página de inicio después del registro exitoso
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('Hubo un error al registrar el usuario');
+      });
+  }
+
 
   return (
     <div className='register-container'>
@@ -128,35 +156,35 @@ const Registro = () => {
             />
             <button type="button" className="add-button" onClick={handleAddAddress}>
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
               </svg>
             </button>
             <button type="button" className='mostrar-ocultar-button' onClick={() => setShowDirections(!showDirections)}>
-            {showDirections ? (
-              // SVG para ocultar (flecha hacia arriba)
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-up" viewBox="0 0 16 16">
-                <path fillRule="evenodd" d="M1.646 11.354a.5.5 0 0 0 .708 0L8 5.707l5.646 5.647a.5.5 0 0 0 .708-.708l-6-6a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 0 .708z"/>
-              </svg>
-            ) : (
-              // SVG para mostrar (flecha hacia abajo)
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">
-                <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            )}
+              {showDirections ? (
+                // SVG para ocultar (flecha hacia arriba)
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-up" viewBox="0 0 16 16">
+                  <path fillRule="evenodd" d="M1.646 11.354a.5.5 0 0 0 .708 0L8 5.707l5.646 5.647a.5.5 0 0 0 .708-.708l-6-6a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 0 .708z" />
+                </svg>
+              ) : (
+                // SVG para mostrar (flecha hacia abajo)
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-down" viewBox="0 0 16 16">
+                  <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                </svg>
+              )}
             </button>
 
-            
+
           </div>
-          
+
           {showDirections && (
             <div className="address-list">
               {formData.direcciones.map((direccion, index) => (
                 <div key={index} className="address-item">
-                 <span>{direccion.calle}</span>
-                 <span>{direccion.altura}</span>
+                  <span>{direccion.calle}</span>
+                  <span>{direccion.altura}</span>
                   <button type="button" className="cancel-button" onClick={() => handleRemoveAddress(index)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
                     </svg>
                   </button>
                 </div>
@@ -199,7 +227,7 @@ const Registro = () => {
           />
         </div>
         <div className="button-group-register">
-          <button type="submit">Aceptar</button>
+          <button type="submit" onClick={registrarUsuario}>Aceptar</button>
           <button type="button" onClick={handleCancel}>Cancelar</button>
         </div>
       </form>

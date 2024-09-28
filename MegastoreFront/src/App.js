@@ -9,8 +9,12 @@ import Catálogo from './Componentes/Catalogo/Catalogo';
 import Cabecera from './Componentes/Cabecera/Cabecera';
 import Pedidos from './Componentes/Pedidos/Pedidos'
 import './App.css';
-import DetallePedido from './Componentes/DetallePedido/DetallePedido';
 import PedidosAdmin from './Componentes/PedidosAdmin/PedidosAdmin';
+import GestionarCatalogo from './Componentes/Catalogo/GestionarCatalogo';
+import DetallePedido from './Componentes/DetallePedido/DetallePedido';
+import Admin from './Componentes/Admin/Admin';
+import LoginAdmin from './Componentes/Admin/LoginAdmin';
+import Edicion from './Componentes/Edicion/Edicion';
 
 function App() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false); // Inicia oculto
@@ -52,6 +56,10 @@ function AppContent({ toggleSidebar, isSidebarVisible }) {
           <Route path="/pedidos" element={<Pedidos />} />
           <Route path="/pedido/:id" element={<DetallePedido />} />
           <Route path="/pedidosAdmin" element={<PedidosAdmin />} />
+          <Route path="/admin" element={<Admin />} /> {/*  ruta para admin */}
+          <Route path="/loginAdmin" element={<LoginAdmin />} />
+          <Route path="/catalogo/GestionarCatalogo" element={<GestionarCatalogo/>} />
+          <Route path="/admin/pedidos" element={<Pedidos />} />
         </Routes>
       </div>
     </div>
