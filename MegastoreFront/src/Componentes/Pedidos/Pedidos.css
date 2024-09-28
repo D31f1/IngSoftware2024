@@ -21,7 +21,7 @@
   
   .titulo-logo svg {
     margin-right: 20px; /* Añade espacio entre el logo y el título */
-    transform: translateY(11px); /* Ajusta el valor según sea necesario */
+    transform: translateY(0px); /* Ajusta el valor según sea necesario */
   }
   
   
@@ -66,4 +66,7 @@
   .detalles-btn:hover {
     background-color: #f9cd67;
   }
-  
+  .pedidos-tabla td {
+    vertical-align: middle;
+    padding: 10px;
+  }

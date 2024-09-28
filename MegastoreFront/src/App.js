@@ -11,6 +11,10 @@ import DetallePedido from './Componentes/DetallePedido/DetallePedido';
 import Carrito from './Componentes/CarritoCompras/Carrito';
 import './App.css';
 
+import Pedidos from './Componentes/Pedidos/Pedidos'
+import './App.css';
+import DetallePedido from './Componentes/DetallePedido/DetallePedido';
+import PedidosAdmin from './Componentes/PedidosAdmin/PedidosAdmin';
 
 function App() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -72,6 +76,7 @@ function AppContent({ toggleSidebar, isSidebarVisible, carrito, agregarAlCarrito
           <Route path="/pedidos" element={<Pedidos />} />
           <Route path="/pedido/:id" element={<DetallePedido />} />
           <Route path="/carrito" element={<Carrito productos={carrito} />} />
+          <Route path="/pedidosAdmin" element={<PedidosAdmin />} />
         </Routes>
       </div>
     </div>

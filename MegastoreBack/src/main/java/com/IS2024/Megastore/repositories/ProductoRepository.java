@@ -4,12 +4,13 @@
  */
 package com.IS2024.Megastore.repositories;
 
-import com.IS2024.Megastore.entities.Pedido;
+import com.IS2024.Megastore.entities.Producto;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 /**
  *
  * @author maite
  */
-public interface ProductoRepository extends JpaRepository<Pedido,Long> {
-    
+public interface ProductoRepository extends JpaRepository<Producto,Long> {
+    Optional<Producto> findByCodigo(String codigo);
 }
