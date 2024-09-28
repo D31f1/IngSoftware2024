@@ -76,4 +76,14 @@ public class PedidoRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    
+    @PutMapping("/actualizarEstado/{codigoEstado}")
+    public ResponseEntity<?> actualizarEstado(@RequestBody Pedido input, @PathVariable String codigoEstado) {
+        try {
+            Pedido updatedPedido = service.actualizarEstado(input, codigoEstado);
+            return ResponseEntity.ok(updatedPedido);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

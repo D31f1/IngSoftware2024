@@ -8,6 +8,7 @@ import com.IS2024.Megastore.Exceptions.InvalidEntityException;
 import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
 import com.IS2024.Megastore.entities.Usuario;
 import com.IS2024.Megastore.entities.Direccion;
+import com.IS2024.Megastore.model.iniciarSesionRq;
 import com.IS2024.Megastore.repositories.UsuarioRepository;
 import java.util.List;
 import java.util.Optional;
@@ -110,6 +111,22 @@ public class UsuarioService implements UsuarioRepository{
             throw new ResourceNotFoundException("Usuario no encontrado con id: " + id);
         }
     }
+    
+    public Usuario iniciarSesion(iniciarSesionRq rq){
+        Optional<Usuario> opUsuario = this.repository.findByCorreo(rq.getCorreo());
+        if(opUsuario.isPresent()){
+            Usuario us = opUsuario.get();
+            if(rq.getContrasenia().equals(us.getContrasenia())){
+                return us;
+            } else {
+                throw new ResourceNotFoundException("contraseña incorrecta");
+            }
+        } else{
+            throw new ResourceNotFoundException("Usuario incorrecto ");
+        }
+    }
+    
+    //==============================================================
     
     @Override
     public void flush() {
