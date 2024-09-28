@@ -4,51 +4,66 @@ import './Registro.css';
 import Cabecera from '../Cabecera/Cabecera';
 
 const Registro = () => {
+  // Estado inicial para manejar los datos del formulario
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
-    telefono: '',
-    direccionesEnvio: [],
-    email: '',
-    contrasena: '',
-    confirmarContrasena: ''
-  });
+
+    nroTelefono: '',  // Número de teléfono del usuario
+    direcciones: [{ calle: '', numero: '' }],  // Lista de direcciones con calle y número
+    correo: '',  // Correo electrónico del usuario
+    contrasenia: '',  // Contraseña ingresada
+    confirmarContrasenia: ''  // Confirmación de la contraseña
+    });
   const [newAddress, setNewAddress] = useState({ calle: '', altura: '' });
   const [showDirections, setShowDirections] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate();// Hook de React Router para redireccionar
 
+ 
+
+
+   
+
+  // Manejador para los cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Manejador para cambios en las direcciones de envío (calle y número)
   const handleNewAddressChange = (field, value) => {
     setNewAddress({ ...newAddress, [field]: value });
   };
 
+  // Añade una nueva dirección de envío
   const handleAddAddress = () => {
     if (newAddress.calle && newAddress.altura) {
       setFormData({
         ...formData,
-        direccionesEnvio: [...formData.direccionesEnvio, newAddress]
+        direcciones: [...formData.direcciones, newAddress]
       });
       setNewAddress({ calle: '', altura: '' });
     }
   };
 
+  // Elimina una dirección de envío por índice
   const handleRemoveAddress = (index) => {
-    const updatedAddresses = formData.direccionesEnvio.filter((_, i) => i !== index);
-    setFormData({ ...formData, direccionesEnvio: updatedAddresses });
+    const updatedAddresses = formData.direcciones.filter((_, i) => i !== index);
+    setFormData({ ...formData, direcciones: updatedAddresses });
   };
 
+  // Redirecciona al usuario a la página de inicio si cancela el registro
+  const handleCancel = () => {
+    navigate('/Home');
+  };
+
+  // Manejador para el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
   };
 
-  const handleCancel = () => {
-    navigate('/Home');
-  };
+  
 
   return (
     <div className='register-container'>
@@ -81,12 +96,12 @@ const Registro = () => {
           />
         </div>
         <div className="register-group-telefono">
-          <label htmlFor="telefono">Teléfono</label>
+          <label htmlFor="nroTelefono">Teléfono</label>
           <input
             type="text"
-            id="telefono"
-            name="telefono"
-            value={formData.telefono}
+            id="nroTelefono"
+            name="nroTelefono"
+            value={formData.nroTelefono}
             onChange={handleChange}
             required
           />
@@ -135,7 +150,7 @@ const Registro = () => {
           
           {showDirections && (
             <div className="address-list">
-              {formData.direccionesEnvio.map((direccion, index) => (
+              {formData.direcciones.map((direccion, index) => (
                 <div key={index} className="address-item">
                  <span>{direccion.calle}</span>
                  <span>{direccion.altura}</span>
@@ -151,34 +166,34 @@ const Registro = () => {
         </div>
 
         <div className="register-group-email">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="correo">Email</label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
+            type="correo"
+            id="correo"
+            name="correo"
+            value={formData.correo}
             onChange={handleChange}
             required
           />
         </div>
         <div className="register-group-contraseña">
-          <label htmlFor="contrasena">Contraseña</label>
+          <label htmlFor="contrasenia">Contraseña</label>
           <input
             type="password"
-            id="contrasena"
-            name="contrasena"
-            value={formData.contrasena}
+            id="contrasenia"
+            name="contrasenia"
+            value={formData.contrasenia}
             onChange={handleChange}
             required
           />
         </div>
         <div className="register-group-confContraseña">
-          <label htmlFor="confirmarContrasena">Confirmar Contraseña</label>
+          <label htmlFor="confirmarContrasenia">Confirmar Contraseña</label>
           <input
             type="password"
-            id="confirmarContrasena"
-            name="confirmarContrasena"
-            value={formData.confirmarContrasena}
+            id="confirmarContrasenia"
+            name="confirmarContrasenia"
+            value={formData.confirmarContrasenia}
             onChange={handleChange}
             required
           />

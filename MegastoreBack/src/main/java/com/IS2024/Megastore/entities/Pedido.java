@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.sql.Date;
@@ -26,8 +27,9 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<DetallePedido> detalles;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_pedido") // Esta columna irá en DetallePedido
+    private List<DetallePedido> detallesPedido;
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable=false)
     private Usuario usuario;
@@ -35,4 +37,5 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name="id_estado", nullable=false)
     private Estado estado;
+    private long precio;
 }
