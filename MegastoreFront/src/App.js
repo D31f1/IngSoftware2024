@@ -7,9 +7,10 @@ import Login from './Componentes/Login/Login';
 import Registro from './Componentes/Registro/Registro';
 import Catálogo from './Componentes/Catalogo/Catalogo';
 import Cabecera from './Componentes/Cabecera/Cabecera';
-import Pedidos from './Pedidos/Pedidos';
+import Pedidos from './Componentes/Pedidos/Pedidos'
 import './App.css';
 import DetallePedido from './Componentes/DetallePedido/DetallePedido';
+import PedidosAdmin from './Componentes/PedidosAdmin/PedidosAdmin';
 
 function App() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false); // Inicia oculto
@@ -50,6 +51,7 @@ function AppContent({ toggleSidebar, isSidebarVisible }) {
           <Route path="/registro" element={<Registro />} /> {/* Página Registro */}
           <Route path="/pedidos" element={<Pedidos />} />
           <Route path="/pedido/:id" element={<DetallePedido />} />
+          <Route path="/pedidosAdmin" element={<PedidosAdmin />} />
         </Routes>
       </div>
     </div>

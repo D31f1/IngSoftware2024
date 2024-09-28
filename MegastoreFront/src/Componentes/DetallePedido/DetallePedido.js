@@ -1,12 +1,13 @@
 // src/Componentes/DetallePedido/DetallePedido.js
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './DetallePedido.css';
 import Cabecera from '../Cabecera/Cabecera';
 
 const DetallePedido = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // Obtiene el id del pedido desde la URL
+  const location = useLocation(); // Obtenemos el estado pasado al navegar
 
   // Ejemplo de datos del pedido. Puedes obtener esto de un API o de un contexto global.
   const pedidoDetalles = {
@@ -26,17 +27,25 @@ const DetallePedido = () => {
 
   const total = subtotal; // Puedes agregar impuestos o descuentos si es necesario
 
+  // Función para manejar el botón "Volver"
+  const volver = () => {
+    if (location.state?.from === 'admin') {
+      navigate('/pedidosAdmin');
+    } else {
+      navigate('/pedidos');
+    }
+  };
+
   return (
     <div className="detalle-pedido-container">
-        <Cabecera/>
-        <div className='titulo-logo-container'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="logo-detalle" viewBox="0 0 16 16">
-                    <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/>
-                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-            </svg>
-            <h2>DETALLE DEL PEDIDO #{pedidoDetalles.id}</h2>
-        </div>
-      
+      <Cabecera />
+      <div className='titulo-logo-container'>
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="logo-detalle" viewBox="0 0 16 16">
+          <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+          <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+        </svg>
+        <h2>DETALLE DEL PEDIDO #{pedidoDetalles.id}</h2>
+      </div>
 
       <table className="detalle-tabla">
         <thead>
@@ -63,7 +72,7 @@ const DetallePedido = () => {
         <h3>Total: ${total.toFixed(2)}</h3>
       </div>
 
-      <button className="volver-btn" onClick={() => navigate('/pedidos')}>
+      <button className="volver-btn" onClick={volver}>
         Volver
       </button>
     </div>

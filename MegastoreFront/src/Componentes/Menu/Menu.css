@@ -47,7 +47,7 @@
   
   /* Botón cuando el menú está abierto */
   .sidebar.visible .toggle-button {
-    left: 170px; /* Mueve el botón ligeramente cuando el menú está abierto */
+    left: 160px; /* Mueve el botón ligeramente cuando el menú está abierto */
     top: 15px; 
   }
   
