@@ -7,11 +7,13 @@ package com.IS2024.Megastore.services;
 import com.IS2024.Megastore.Exceptions.InvalidEntityException;
 import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
 import com.IS2024.Megastore.entities.DetallePedido;
+import com.IS2024.Megastore.entities.Estado;
 import com.IS2024.Megastore.entities.Pedido;
 import com.IS2024.Megastore.repositories.PedidoRepository;
 import jakarta.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class PedidoService {
     private DetallePedidoService serviceDetalle;
     @Autowired
     private ProductoService serviceProducto;
+    @Autowired
+    private EstadoService serviceEstado;
 
     public Optional<Pedido> findById(Long id) {
         return this.repository.findById(id);
@@ -46,10 +50,68 @@ public class PedidoService {
         Optional<Pedido> existingPedido = this.repository.findById(id);
         if(existingPedido.isPresent()){
             Pedido updatedPedido = existingPedido.get();
-            //setAtributos
+            
+            //Detalles del pedido existente
+            List<DetallePedido> detallesGuardados = updatedPedido.getDetallesPedido();
+            //Detalles que vienen en el pedido a actualizar
+            List<DetallePedido> detallesActualizados = pedido.getDetallesPedido();
+            
+            //Detalles a eliminar
+            List<DetallePedido> detallesEliminar = new ArrayList<>();
+            //Detalles a actualizar
+            List<DetallePedido> detallesActualizar = new ArrayList<>();
+            //Detalles a crear
+            List<DetallePedido> detallesCrear = new ArrayList<>();
+            
+            //IDENTIFICAR DETALLES A ELIMINAR -> tienen que estar en updatedPedido.getDetallesPedido() y no en pedido.getDetallesPedido();
+            for(DetallePedido dp : detallesGuardados){
+                if(!detallesActualizados.stream().anyMatch(detalle -> detalle.getId().equals(dp.getId()))){
+                    detallesEliminar.add(dp);
+                }
+            }
+            
+            //IDENTIFICAR DETALLES A ACTUALIZAR Y CREAR
+            //Para ACTUALIZAR id existente y no tiene que estar en los eliminar
+            //Para CREAR sin ID o ID 0
+            for (DetallePedido dp : detallesActualizados){
+                if( dp.getId()== 0 || dp.getId() == null){
+                    detallesCrear.add(dp);
+                } else{
+                    if(!detallesEliminar.stream().anyMatch(d -> d.getId().equals(dp.getId()))){
+                        detallesActualizar.add(dp);
+                    }
+                }
+            }
+            
+            //ELIMINAR DETALLES
+            for(DetallePedido dp : detallesEliminar){
+                this.serviceDetalle.deleteById(dp.getId());
+            }
+            
+            //ACTUALIZAR DETALLES
+            for(DetallePedido dp : detallesActualizar){
+                this.serviceDetalle.updateDetallePedido(dp.getId(), dp);
+            }
+            
+            //Al hacer this.repository.save(updatedPedido); los detalles que no esten se crean 
+            //Pero les hace falta setear el precio y actualizar el stock del producto
+            for(DetallePedido dp : detallesCrear){
+                if(this.serviceProducto.tieneStock(dp.getProducto().getId(), dp.getCantidad())){
+                    dp.setPrecio(this.serviceDetalle.setTotal(dp));
+                    //Actualizar stock de producto
+                    this.serviceProducto.actualizarStock(dp.getProducto().getId(),(dp.getCantidad() * (-1)));
+                } else {
+                    throw new InvalidEntityException("NO HAY STOCK");
+                }
+            }
             
             //PRECIO
             updatedPedido.setPrecio(this.calcularTotalPedido(pedido));
+            
+            
+            //El usuario y fecha no se modifica 
+            //El estado solo lo modifica el administrador y para eso hay otro metodo
+            
             
             return this.repository.save(updatedPedido);
         } else {
@@ -69,7 +131,7 @@ public class PedidoService {
             if(this.serviceProducto.tieneStock(dp.getProducto().getId(), dp.getCantidad())){
                 dp.setPrecio(this.serviceDetalle.setTotal(dp));
                 //Actualizar stock de producto
-                this.serviceProducto.actualizarStock(dp.getProducto().getId(),dp.getCantidad());
+                this.serviceProducto.actualizarStock(dp.getProducto().getId(),(dp.getCantidad() * (-1)));
             } else {
                 throw new InvalidEntityException("NO HAY STOCK");
             }
@@ -77,6 +139,14 @@ public class PedidoService {
         
         //PRECIO
         pedido.setPrecio(this.calcularTotalPedido(pedido));
+        
+        //Estado
+        Optional<Estado> estado = this.serviceEstado.findByCodigo("PN");
+        if(estado.isPresent()){
+            pedido.setEstado(estado.get());
+        } else{
+            throw new IllegalStateException("OCURRIO UN ERROR AL BUSCAR EL ESTADO");
+        }
         
         return this.repository.save(pedido);
     }
@@ -90,6 +160,49 @@ public class PedidoService {
         
         return total;
     }
+    
+    public Pedido actualizarEstado(Pedido pedido, String codigoEstado){
+        Optional<Pedido> pedidoExistente = this.repository.findById(pedido.getId());
+        if (pedidoExistente.isPresent()){
+            Pedido p = pedidoExistente.get();
+            
+            Optional<Estado> estado = this.serviceEstado.findByCodigo(codigoEstado);
+            
+            if(estado.isPresent()){
+                switch (codigoEstado){
+                    case "PN": //solo se puede setear si es null o esta en preparacion
+                        if(pedido.getEstado() != null && !pedido.getEstado().getCodigo().equals("EP") ){
+                            throw new IllegalStateException("No se puede pasar a pendiente");
+                        } 
+                        break;
+                    case "EP": //solo se puede pasar desde el estao Pendiente
+                        if(pedido.getEstado() == null && !pedido.getEstado().getCodigo().equals("PN") ){
+                            throw new IllegalStateException("No se puede pasar a enPreparacion");
+                        } 
+                        break;
+                    case "ET": //solo se puede pasar desde enPreparacion
+                        if(pedido.getEstado() == null && !pedido.getEstado().getCodigo().equals("EP") ){
+                            throw new IllegalStateException("No se puede entregar");
+                        } 
+                        break;
+                    case "CN": //no se puede cancelar si esta entregado
+                        if(pedido.getEstado() == null && pedido.getEstado().getCodigo().equals("EN") ){
+                            throw new IllegalStateException("No se puede cancelar");
+                        } 
+                        break;
+                }
+                p.setEstado(estado.get());
+            }else{
+                throw new ResourceNotFoundException("estado no encontrado con codigo: " + codigoEstado);
+            }
+            return this.repository.save(p);
+            
+        }else {
+            throw new ResourceNotFoundException("Pedido no encontrado con id: " + pedido.getId());
+        }
+    }
+    
+   
 
     public void deleteById(Long id) {
         if(this.repository.existsById(id)){

@@ -52,6 +52,7 @@ public class ProductoService {
             updatedProducto.setNombre(producto.getNombre());
             updatedProducto.setStock(producto.getStock());
             updatedProducto.setPrecio(producto.getPrecio());
+            updatedProducto.setFoto(producto.getFoto());
             
             //CODIGO, debe ser unico.
             if(!producto.getCodigo().equals(updatedProducto.getCodigo())){ //Se esta cambiando el codigo de producto
@@ -124,12 +125,12 @@ public class ProductoService {
         return this.repository.save(producto);
     }
     
-    
+    //cantidad puede ser negativo en caso de creacion de pedido y positivo en caso de que se elimine un detalle o un pedido
     public void actualizarStock(Long id, int cantidad){
         Optional<Producto> producto = this.repository.findById(id);
         if(producto.isPresent()){
             Producto updatedProducto = producto.get();
-            int stock = updatedProducto.getStock() - cantidad;
+            int stock = updatedProducto.getStock() + (cantidad);
             if(stock>=0){
                 updatedProducto.setStock(stock);
             } else{

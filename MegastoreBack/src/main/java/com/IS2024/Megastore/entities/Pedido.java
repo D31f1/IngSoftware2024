@@ -37,7 +37,5 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name="id_estado", nullable=false)
     private Estado estado;
-    @Lob 
-    private String foto;
     private long precio;
 }
