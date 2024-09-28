@@ -4,15 +4,14 @@
  */
 package com.IS2024.Megastore.controller;
 
-import ch.qos.logback.core.CoreConstants;
 import com.IS2024.Megastore.Exceptions.ResourceNotFoundException;
 import com.IS2024.Megastore.services.UsuarioService;
 import com.IS2024.Megastore.entities.Usuario;
+import com.IS2024.Megastore.model.iniciarSesionRq;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,4 +77,10 @@ public class UsuarioRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    
+    @PostMapping("/iniciarSesion")
+    public Usuario iniciarSesion(@RequestBody iniciarSesionRq input) {
+        return null;
+    }
+    
 }
