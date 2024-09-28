@@ -1,0 +1,42 @@
+/* Registro.css */
+.register-container {
+  padding: 20px;
+  text-align: center; /* Centra el texto */
+  margin-top: 80px; /* Ajusta este valor según sea necesario */
+}
+
+.direccion-envio-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Espacio entre direcciones */
+}
+
+.direccion-envio-group input {
+  flex: 1; /* Ocupa el espacio disponible */
+  margin-right: 10px; /* Espacio entre los campos y el botón */
+  border: none; /* Sin borde */
+  border-bottom: 2px solid black; /* Borde inferior negro */
+  background: transparent; /* Sin fondo */
+  outline: none; /* Sin contorno al hacer clic */
+}
+
+.direccion-envio-group button {
+  background-color: #a6a6a6;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.direccion-envio-group button:hover {
+  background-color: #f9cd67;
+}
+.register-group input{
+  flex: 1; /* Ocupa el espacio disponible */
+  margin-right: 10px; /* Espacio entre los campos y el botón */
+  border: none; /* Sin borde */
+  border-bottom: 2px solid black; /* Borde inferior negro */
+  background: transparent; /* Sin fondo */
+  outline: none; /* Sin contorno al hacer clic */
+}
