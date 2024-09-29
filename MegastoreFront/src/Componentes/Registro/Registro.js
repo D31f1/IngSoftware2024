@@ -71,7 +71,11 @@ const Registro = () => {
       alert('Debes añadir al menos una dirección de envío.');
       return; // Evita el envío si no hay direcciones
     }
-    
+    // Validación de contraseñas
+    if (formData.contrasenia !== formData.confirmarContrasenia) {
+      alert('La contraseña no coinciden'); // Mensaje de advertencia
+      return; // Detener la ejecución si no coinciden
+  }
     registrarUsuario(); // Llama a la función para registrar el usuario
     
   };
@@ -107,7 +111,7 @@ const Registro = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
-        alert('Hubo un error al registrar el usuario');
+        alert('El usuario ya se encuentra registrado');
       });
   }
 
@@ -247,7 +251,7 @@ const Registro = () => {
           />
         </div>
         <div className="button-group-register">
-          <button type="submit" onClick={registrarUsuario}>Aceptar</button>
+          <button type="submit" >Aceptar</button>
           <button type="button" onClick={handleCancel}>Cancelar</button>
         </div>
       </form>
