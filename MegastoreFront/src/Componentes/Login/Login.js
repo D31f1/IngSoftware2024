@@ -8,20 +8,43 @@ const Login = ({ setIsLoggedIn }) => { // Acepta setIsLoggedIn como prop
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); // Para redirigir después de iniciar sesión
+  const [errorMessage] = useState(''); // Para manejar errores de inicio de sesión
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Evita el comportamiento por defecto del formulario
-
-    // Aquí va la lógica de autenticación. Este es solo un ejemplo simple.
+  
     if (username && password) {
-      // Si el inicio de sesión es exitoso:
-      setIsLoggedIn(true); // Cambia el estado a logged in
-      navigate('/'); // Redirige a la página de inicio o a donde desees
+      try {
+        const response = await fetch('http://localhost:8080/usuario/iniciarSesion', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            correo: username,      // Cambia esto si el campo de correo es diferente
+            contrasenia: password, // Cambia esto si el campo de contraseña es diferente
+          }),
+        });
+  
+        if (response.status === 401) {
+          throw new Error('Usuario o contraseña incorrecta'); // Maneja el error de autenticación
+        }
+  
+        if (!response.ok) {
+          throw new Error('Error en la autenticación');
+        }
+  
+        
+        setIsLoggedIn(true); // Cambia el estado a logged in
+        navigate('/'); // Redirige a la página de inicio o a donde desees
+      } catch (error) {
+        alert(error.message); // Muestra el mensaje de error si ocurre
+      }
     } else {
-      // Maneja el error de inicio de sesión si es necesario
-      alert('Por favor ingresa tus credenciales.');
+      alert('Por favor ingresa tus credenciales.'); // Maneja el error de inicio de sesión si es necesario
     }
   };
+  
 
   return (
     <div className='login-container'> 
@@ -56,6 +79,7 @@ const Login = ({ setIsLoggedIn }) => { // Acepta setIsLoggedIn como prop
         </div>
         <button type="submit">Ingresar</button>
       </form>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Mostrar mensaje de error */}
       <p className='register-prompt'>¿No tienes una cuenta? <Link to="/registro">¡Regístrate ahora!</Link></p>
     </div>
   );
