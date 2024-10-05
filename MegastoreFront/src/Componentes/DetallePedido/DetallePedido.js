@@ -1,39 +1,55 @@
 // src/Componentes/DetallePedido/DetallePedido.js
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './DetallePedido.css';
 import Cabecera from '../Cabecera/Cabecera';
 
 const DetallePedido = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // Obtiene el id del pedido desde la URL
-  const location = useLocation(); // Obtenemos el estado pasado al navegar
+  const { id } = useParams();
+  const location = useLocation();
 
-  // Ejemplo de datos del pedido. Puedes obtener esto de un API o de un contexto global.
+  // Inicializa el estado de los productos
+  const [productos, setProductos] = useState([
+    { nombre: 'Producto 1', precio: 10, cantidad: 2 },
+    { nombre: 'Producto 2', precio: 15, cantidad: 1 },
+    { nombre: 'Producto 3', precio: 20, cantidad: 3 },
+  ]);
+
   const pedidoDetalles = {
     id,
-    direccion: location.state?.direccion || 'Dirección no disponible', // Obteniendo la dirección del estado
-    productos: [
-      { nombre: 'Producto 1', precio: 10, cantidad: 2 },
-      { nombre: 'Producto 2', precio: 15, cantidad: 1 },
-      { nombre: 'Producto 3', precio: 20, cantidad: 3 },
-    ],
+    direccion: location.state?.direccion || 'Dirección no disponible',
+    productos,
   };
 
-  // Calcular el subtotal y el total
-  const subtotal = pedidoDetalles.productos.reduce(
+  const subtotal = productos.reduce(
     (acc, producto) => acc + producto.precio * producto.cantidad,
     0
   );
 
-  const total = subtotal; // Puedes agregar impuestos o descuentos si es necesario
+  const total = subtotal;
 
-  // Función para manejar el botón "Volver"
-  const volver = () => {
-    if (location.state?.from === 'pedidosAdmin') {
-      navigate('/pedidosAdmin');
-    } else {
-      navigate('/pedidos');
+  const finalizar = () => {
+    console.log('Pedido finalizado');
+    navigate('/pedidos'); // Redirigir a la página de pedidos
+  };
+
+  const cancelar = () => {
+    console.log('Pedido cancelado');
+    navigate('/pedidos'); // Redirigir a la página de pedidos
+  };
+
+  const incrementarCantidad = (index) => {
+    const nuevosProductos = [...productos];
+    nuevosProductos[index].cantidad += 1;
+    setProductos(nuevosProductos);
+  };
+
+  const decrementarCantidad = (index) => {
+    const nuevosProductos = [...productos];
+    if (nuevosProductos[index].cantidad > 1) {
+      nuevosProductos[index].cantidad -= 1;
+      setProductos(nuevosProductos);
     }
   };
 
@@ -45,16 +61,16 @@ const DetallePedido = () => {
           <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
           <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
         </svg>
-        <h2>DETALLE DEL PEDIDO #{pedidoDetalles.id}</h2>
+        <h2>DETALLE DE LA COMPRA #{pedidoDetalles.id}</h2>
       </div>
 
       <table className="detalle-tabla">
         <thead>
           <tr>
-            <th>Producto</th>
-            <th>Precio Unitario</th>
-            <th>Cantidad</th>
-            <th>Subtotal</th>
+            <th>PRODUCTO</th>
+            <th>PRECIO POR UNIDAD</th>
+            <th>CANTIDAD</th>
+            <th>SUBTOTAL</th>
           </tr>
         </thead>
         <tbody>
@@ -62,7 +78,11 @@ const DetallePedido = () => {
             <tr key={index}>
               <td>{producto.nombre}</td>
               <td>${producto.precio.toFixed(2)}</td>
-              <td>{producto.cantidad}</td>
+              <td>
+                <button onClick={() => decrementarCantidad(index)}>-</button>
+                {producto.cantidad}
+                <button onClick={() => incrementarCantidad(index)}>+</button>
+              </td>
               <td>${(producto.precio * producto.cantidad).toFixed(2)}</td>
             </tr>
           ))}
@@ -70,12 +90,13 @@ const DetallePedido = () => {
       </table>
 
       <div className="total-container">
-        <h3>Total: ${total.toFixed(2)}</h3>
+        <h3>TOTAL: ${total.toFixed(2)}</h3>
       </div>
 
-      <button className="volver-btn" onClick={volver}>
-        Volver
-      </button>
+      <div className="botones-container">
+        <button className="finalizar-btn" onClick={finalizar}>Finalizar</button>
+        <button className="cancelar-btn" onClick={cancelar}>Cancelar</button>
+      </div>
     </div>
   );
 };

@@ -8,13 +8,13 @@ import Catalogo from './Componentes/Catalogo/Catalogo';
 import Cabecera from './Componentes/Cabecera/Cabecera';
 import Pedidos from './Componentes/Pedidos/Pedidos';
 import DetallePedido from './Componentes/DetallePedido/DetallePedido';
-import Carrito from './Componentes/CarritoCompras/Carrito';
+import Carrito from './Componentes/BotonCarrito/BotonCarrito';
 import './App.css';
 import PedidosAdmin from './Componentes/PedidosAdmin/PedidosAdmin';
 import GestionarCatalogo from './Componentes/Catalogo/GestionarCatalogo';
 import Admin from './Componentes/Admin/Admin';
 import LoginAdmin from './Componentes/Admin/LoginAdmin';
-import Edicion from './Componentes/Edicion/Edicion';
+// import Edicion from './Componentes/Edicion/Edicion';
 
 function App() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);

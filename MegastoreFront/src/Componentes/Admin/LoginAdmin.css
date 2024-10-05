@@ -26,7 +26,6 @@ form {
 
 form div {
   margin-bottom: 15px; /* Espacio entre los inputs */
-  width: 20%; /* Ajusta el ancho de los divs a 80% para mantener espacio a los lados */
 }
 
 .input-group {
@@ -34,7 +33,6 @@ form div {
   margin-bottom: 15px; /* Espacio entre los inputs */
   width: 80%; /* Ancho del contenedor */
   align-items: center;
-  margin-left: 970px;
 }
 
 .input-group label {
@@ -61,7 +59,7 @@ button {
   border: none; /* Sin borde */
   border-radius: 5px; /* Bordes redondeados */
   cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-  width: 8%; /* Botón ocupa todo el ancho del formulario */
+  
 }
 
 .register-prompt {

@@ -43,6 +43,7 @@
   .sidebar.hidden .toggle-button {
     left: -30px; /* Asegura que el botón siempre esté visible cuando el menú está cerrado */
     top: 15px;
+    width: 80%;
   }
   
   /* Botón cuando el menú está abierto */

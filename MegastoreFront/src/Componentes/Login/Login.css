@@ -26,7 +26,6 @@ form {
 
 form div {
   margin-bottom: 15px; /* Espacio entre los inputs */
-  width: 80%; /* Ajusta el ancho del contenedor de los inputs */
   max-width: 400px; /* Máximo ancho para evitar que crezca demasiado */
 }
 
@@ -59,7 +58,6 @@ button {
   border: none; /* Sin borde */
   border-radius: 5px; /* Bordes redondeados */
   cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-  width: 80%; /* Ajusta el ancho del botón */
   max-width: 200px; /* Asegura que el botón no crezca demasiado */
 }
 

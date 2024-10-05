@@ -53,9 +53,15 @@ body, html {
 }
 
 .header-buttons {
-  display: flex;
-  justify-content: flex-end; /* Asegura que estén alineados a la derecha */
-  gap: 20px; /* Aumenta el espacio entre los botones */
-  padding: 20px;
+  display: flex; /* Usar flexbox para alinear los botones */
+  align-items: center; /* Centrar verticalmente los botones */
 }
 
+.header-buttons > * {
+  margin-right: 15px; /* Espaciado entre los botones */
+}
+
+/* Opcional: Eliminar el margen derecho del último botón */
+.header-buttons > :last-child {
+  margin-right: 0; /* Sin margen derecho en el último botón */
+}
