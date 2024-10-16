@@ -1,0 +1,62 @@
+.catalog-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center; /* Centra el contenido en el eje horizontal */
+    padding: 0; /* Elimina cualquier relleno */
+    margin-top: 1200px; /* Ajusta si es necesario */
+    overflow-x: hidden;
+    overflow-y: auto; /* Usa 'auto' para mostrar la barra de desplazamiento solo cuando sea necesario */
+}
+
+.filtro-container {
+    width: 100%; /* Ajusta el ancho del contenedor de filtros */
+    position: sticky; /* Mantiene el contenedor en su posición al hacer scroll */
+    top: 0; /* Fija el contenedor en la parte superior */
+    background:none; /* Fondo blanco para que sea visible sobre los productos */
+    z-index: 10; /* Asegura que esté por encima de otros elementos */
+    padding: 10px 0; /* Espaciado alrededor de los filtros */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra opcional para efecto visual */
+}
+
+.reset-filters-button{
+    width: 100%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Coloca productos en columnas */
+    grid-gap: 10px; /* Espacio entre productos */
+    margin: auto; /* Centra la cuadrícula */
+    padding: 20px; /* Espaciado alrededor de los productos */
+    width: 100%; /* Asegura que la cuadrícula ocupe todo el ancho disponible */
+    height: 100%;
+}
+
+.grid-container p {
+    font-size: 1.5rem; /* Ajusta el tamaño de la fuente según tu diseño */
+    color: rgb(0, 0, 0); /* Puedes cambiar el color a lo que prefieras */
+    margin: -auto;
+    text-align: center; /* Centra el texto */
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+}
+
+.product-name {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.product-price {
+    font-size: 16px;
+    color: #555;
+}

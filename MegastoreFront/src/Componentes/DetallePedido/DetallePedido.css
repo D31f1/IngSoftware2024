@@ -1,0 +1,76 @@
+.detalle-pedido-container {
+    background-color: rgba(255, 255, 200, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .titulo-logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .titulo-logo-container h2 {
+    margin-left: 10px;
+    color: #4c4c00; /* Color del texto del encabezado */
+  }
+  
+  .detalle-tabla {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .detalle-tabla th {
+    background-color: #fff200; /* Encabezados amarillos */
+    padding: 10px;
+    /* text-align: left; */
+  }
+  
+  .detalle-tabla td {
+    background-color: rgba(255, 255, 200, 0.8); /* Cuerpo amarillo claro */
+    padding: 10px;
+  }
+  
+  .total-container {
+    margin-top: 20px;
+  }
+  
+  .botones-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .finalizar-btn,
+  .cancelar-btn {
+    background-color: #fff200; /* Color del botón */
+    color: #4c4c00; /* Color del texto del botón */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .finalizar-btn:hover,
+  .cancelar-btn:hover {
+    background-color: #e6e600; /* Efecto hover */
+  }
+  td button {
+    background-color: #fff200; /* Color del botón */
+    color: #4c4c00; /* Color del texto del botón */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  
+  td button:hover {
+    background-color: #e6e600; /* Efecto hover */
+  }
+  
+  h3{
+    background-color: #fff200;
+    padding: 10px;
+
+}
